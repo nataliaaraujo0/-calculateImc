@@ -1,10 +1,19 @@
 import { CardWrapper } from "./styled";
 import curiousBoy from "../../../src/assets/curiousBoy.jpg";
-export const Card = () => {
+
+type CardProps = {
+  img?: string;
+  title?: string;
+};
+
+export const Card = ({
+  img = curiousBoy,
+  title = "Descubra seu IMC",
+}: CardProps) => {
   return (
     <CardWrapper>
-      <img src={curiousBoy} alt="" />
-      <h1>Descubra seu IMC</h1>
+      <img src={img} alt="" />
+      <h1>{title}</h1>
     </CardWrapper>
   );
 };
