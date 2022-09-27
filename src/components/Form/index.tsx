@@ -33,6 +33,12 @@ export function Form({ formatedImc }: FormProps) {
   const { register, handleSubmit } = useForm<NewImcFormInputs>({
     resolver: zodResolver(newImcFormSchema),
   });
+  const abaixoDoPeso = resultImc < 18.5;
+  const pesoNormal = resultImc >= 18.5 && resultImc <= 24.8;
+  const sobrepeso = resultImc > 24.9 && resultImc <= 29.8;
+  const obsediadeA = resultImc >= 29.9 && resultImc <= 34.8;
+  const obsediadeB = resultImc >= 34.9 && resultImc <= 39.8;
+  const obsediadeC = resultImc >= 39.9;
 
   async function handleCalImc(data: NewImcFormInputs) {
     const { weight, height } = data;
@@ -40,14 +46,11 @@ export function Form({ formatedImc }: FormProps) {
     const formatedImc = resultImc.toFixed(2);
     setResultImc(+formatedImc);
     console.log(formatedImc);
+    console.log(formatedImc, obsediadeA)
+
   }
 
-  const abaixoDoPeso = resultImc < 18.5;
-  const pesoNormal = resultImc >= 18.5;
-  const sobrepeso = resultImc >= 24.9;
-  const obsediadeA = resultImc >= 29.9;
-  const obsediadeB = resultImc >= 34.9;
-  const obsediadeC = resultImc >= 39.9;
+
 
   return (
     <FormWrapper onSubmit={handleSubmit(handleCalImc)}>
