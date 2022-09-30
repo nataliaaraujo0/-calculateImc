@@ -5,9 +5,6 @@ import { FormWrapper } from "./styled";
 import { useCalcImc } from "../../hooks/useCalImc";
 import { Card } from "../Card";
 
-interface FormProps {
-  formatedImc?: number | string;
-}
 const newImcFormSchema = z.object({
   weight: z.number(),
   height: z.number(),
@@ -16,7 +13,7 @@ const newImcFormSchema = z.object({
 
 type NewImcFormInputs = z.infer<typeof newImcFormSchema>;
 
-export function Form({ formatedImc }: FormProps) {
+export function Form() {
   const { setResultImc, obsediadeA } = useCalcImc();
 
   const { register, handleSubmit } = useForm<NewImcFormInputs>({
