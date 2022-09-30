@@ -1,12 +1,11 @@
 import { AppWrapper } from "./app.styled";
-import { Card } from "./components/Card";
-import { Form } from "./components/Form";
+
+import { ContentImc } from "./components/ContentImc";
 
 export function App() {
   return (
     <AppWrapper>
-      <Card />
-      <Form />
+      <ContentImc />
     </AppWrapper>
   );
 }

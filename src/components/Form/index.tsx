@@ -3,10 +3,10 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormWrapper } from "./styled";
 import { useCalcImc } from "../../hooks/useCalImc";
-import { useState } from "react";
+import { Card } from "../Card";
 
 interface FormProps {
-  formatedImc: number | string;
+  formatedImc?: number | string;
 }
 const newImcFormSchema = z.object({
   weight: z.number(),
@@ -17,28 +17,11 @@ const newImcFormSchema = z.object({
 type NewImcFormInputs = z.infer<typeof newImcFormSchema>;
 
 export function Form({ formatedImc }: FormProps) {
-  //const {
-  //sobrepeso,
-  //setResultImc,
-  //resultImc,
-  //pesoNormal,
-  //obsediadeC,
-  //obsediadeB,
-  //obsediadeA,
-  //abaixoDoPeso,
-  //} = useCalcImc();
-
-  const [resultImc, setResultImc] = useState(0);
+  const { setResultImc, obsediadeA } = useCalcImc();
 
   const { register, handleSubmit } = useForm<NewImcFormInputs>({
     resolver: zodResolver(newImcFormSchema),
   });
-  const abaixoDoPeso = resultImc < 18.5;
-  const pesoNormal = resultImc >= 18.5 && resultImc <= 24.8;
-  const sobrepeso = resultImc > 24.9 && resultImc <= 29.8;
-  const obsediadeA = resultImc >= 29.9 && resultImc <= 34.8;
-  const obsediadeB = resultImc >= 34.9 && resultImc <= 39.8;
-  const obsediadeC = resultImc >= 39.9;
 
   async function handleCalImc(data: NewImcFormInputs) {
     const { weight, height } = data;
@@ -46,11 +29,8 @@ export function Form({ formatedImc }: FormProps) {
     const formatedImc = resultImc.toFixed(2);
     setResultImc(+formatedImc);
     console.log(formatedImc);
-    console.log(formatedImc, obsediadeA)
-
+    console.log(formatedImc, obsediadeA);
   }
-
-
 
   return (
     <FormWrapper onSubmit={handleSubmit(handleCalImc)}>
@@ -71,14 +51,6 @@ export function Form({ formatedImc }: FormProps) {
       />
 
       <button type="submit">Enviar</button>
-
-      {resultImc}
-      {abaixoDoPeso ? <h1>abaixoDoPeso</h1> : "null"}
-      {pesoNormal && <h1>pesoNormal</h1>}
-      {sobrepeso && <h1>sobrepeso</h1>}
-      {obsediadeA && <h1>obsediadeA</h1>}
-      {obsediadeB && <h1>obsediadeB</h1>}
-      {obsediadeC && <h1>obsediadeC</h1>}
     </FormWrapper>
   );
 }
