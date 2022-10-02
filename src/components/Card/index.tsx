@@ -1,18 +1,15 @@
 import { CardWrapper } from "./styled";
-import curiousBoy from "../../../src/assets/curiousBoy.jpg";
+import { ReactElement } from "react";
 
 type CardProps = {
-  img?: string;
+  icon: ReactElement;
   title?: string;
 };
 
-export const Card = ({
-  img = curiousBoy,
-  title = "Descubra seu IMC",
-}: CardProps) => {
+export const Card = ({ icon, title = "Calcule o seu Imc :" }: CardProps) => {
   return (
     <CardWrapper>
-      <img src={img} alt="" />
+      {icon}
       <h1>{title}</h1>
     </CardWrapper>
   );

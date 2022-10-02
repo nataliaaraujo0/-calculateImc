@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormWrapper } from "./styled";
-import { useCalcImc } from "../../hooks/useCalImc";
-import { Card } from "../Card";
+
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const newImcFormSchema = z.object({
   weight: z.number(),
@@ -14,7 +14,8 @@ const newImcFormSchema = z.object({
 type NewImcFormInputs = z.infer<typeof newImcFormSchema>;
 
 export function Form() {
-  const { setResultImc, obsediadeA } = useCalcImc();
+  const [scale, setScale] = useState("");
+  const [color, setColor] = useState("");
 
   const { register, handleSubmit } = useForm<NewImcFormInputs>({
     resolver: zodResolver(newImcFormSchema),
@@ -23,31 +24,49 @@ export function Form() {
   async function handleCalImc(data: NewImcFormInputs) {
     const { weight, height } = data;
     const resultImc = weight / (height * height);
+
     const formatedImc = resultImc.toFixed(2);
-    setResultImc(+formatedImc);
-    console.log(formatedImc);
-    console.log(formatedImc, obsediadeA);
+
+    if (Number(formatedImc) < 18.5) {
+      setColor("red");
+      return setScale("Abaixo do Peso");
+    } else if (Number(formatedImc) >= 18.5 && Number(formatedImc) < 24.9) {
+      setColor("green");
+      return setScale("Peso Ideal");
+    } else if (Number(formatedImc) >= 24.9 && Number(formatedImc) < 34.9) {
+      setColor("yellow");
+      return setScale("Obesidade A");
+    } else if (Number(formatedImc) >= 34.9 && Number(formatedImc) < 39.9) {
+      setColor("orange");
+      return setScale("Obesidade B");
+    } else if (Number(formatedImc) >= 39.9) {
+      setColor("red");
+      return setScale("Obesidade C");
+    }
   }
 
   return (
-    <FormWrapper onSubmit={handleSubmit(handleCalImc)}>
-      <input
-        type="text"
-        placeholder="Qual é o seu nome?"
-        {...register("name")}
-      />
-      <input
-        type="tex"
-        placeholder="Qual é seu peso?"
-        {...register("weight", { valueAsNumber: true })}
-      />
-      <input
-        type="text"
-        placeholder="Qual é  a sua altura?"
-        {...register("height", { valueAsNumber: true })}
-      />
+    <>
+      <FormWrapper onSubmit={handleSubmit(handleCalImc)}>
+        <input
+          type="text"
+          placeholder="Informe seu nome"
+          {...register("name")}
+        />
+        <input
+          type="tex"
+          placeholder="Informe seu peso (kg)"
+          {...register("weight", { valueAsNumber: true })}
+        />
+        <input
+          type="text"
+          placeholder="Informe sua altura (m)"
+          {...register("height", { valueAsNumber: true })}
+        />
 
-      <button type="submit">Enviar</button>
-    </FormWrapper>
+        <button type="submit">Enviar</button>
+      </FormWrapper>
+      {scale ? <h1 style={{ color: color }}>{scale}</h1> : ""}
+    </>
   );
 }
