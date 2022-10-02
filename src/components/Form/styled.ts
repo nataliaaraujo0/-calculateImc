@@ -7,6 +7,7 @@ export const FormWrapper = styled.form`
   height: auto;
 
   gap: 8px;
+  margin-bottom: 10px;
 
   input {
     background: #1d1b4f;
@@ -29,5 +30,25 @@ export const FormWrapper = styled.form`
     border-radius: 4px;
     font-weight: bold;
     cursor: pointer;
+  }
+`;
+
+export const FormRsult = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  strong {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  > div {
+    width: 200px;
+    height: 30px;
+    padding: 0.3rem;
+    text-align: center;
+    border-radius: 4px;
+    border: 1px solid #23235b;
   }
 `;

@@ -1,6 +1,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormWrapper } from "./styled";
+import { FormRsult, FormWrapper } from "./styled";
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -66,7 +66,10 @@ export function Form() {
 
         <button type="submit">Enviar</button>
       </FormWrapper>
-      {scale ? <h1 style={{ color: color }}>{scale}</h1> : ""}
+      <FormRsult>
+        <strong>Resultado: </strong>
+        <div>{scale ? <p style={{ color: color }}>{scale}</p> : ""}</div>
+      </FormRsult>
     </>
   );
 }
