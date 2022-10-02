@@ -6,6 +6,8 @@
 
 ![image](https://user-images.githubusercontent.com/81394067/193480257-602cffa2-c781-4106-962d-7f1c0c81f24f.png)
 
+### Tecnologias
+React, Vite, Typescript, React Hook Form, Phosphor React e zod
 
 ### Como usar 
 
